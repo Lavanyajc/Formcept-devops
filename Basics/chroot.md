@@ -27,16 +27,10 @@ Normally, a process sees:
 ```
 
 But with `chroot`, you tell it:
-
 > *"Hey process, your new / is /home/lavanya/newroot"*
-
 So if inside chroot the process tries to access `/bin/bash`, it’s actually:
 
-```
-
 /home/lavanya/newroot/bin/bash
-
-````
 
 The process **thinks** it is in a full system, but it is locked in a folder.
 
