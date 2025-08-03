@@ -1,4 +1,3 @@
-```
 # 🧱 Chroot Environment Setup (Using debootstrap)
 
 This document explains how to create a minimal Linux environment using `chroot` and `debootstrap`. This is part of **Task 1: Container & Runtime Basics** from the Formcept DevOps Onboarding series.
@@ -11,13 +10,14 @@ This document explains how to create a minimal Linux environment using `chroot` 
 It’s a Linux/Unix command that creates a *fake environment* for a program by changing its idea of what the `/` (root folder) is.
 
 > **In simple words**:  
-It tricks a process into thinking a subfolder is the entire root of the filesystem.  
+> It tricks a process into thinking a subfolder is the entire root of the filesystem.  
 
 ---
 
 ## 🔍 Imagine This
 
 Normally, a process sees:
+
 ```
 
 /bin/bash
@@ -25,10 +25,13 @@ Normally, a process sees:
 /var/log/syslog
 
 ```
+
 But with `chroot`, you tell it:
-> *"Hey process, your new / is /home/lavanya/newroot"*  
+
+> *"Hey process, your new / is /home/lavanya/newroot"*
 
 So if inside chroot the process tries to access `/bin/bash`, it’s actually:
+
 ```
 
 /home/lavanya/newroot/bin/bash
@@ -87,7 +90,7 @@ Set up a basic isolated shell environment using:
 - Required shared libraries
 - A minimal root filesystem with `debootstrap`
 
----
+
 
 ## 📦 Prerequisites
 
@@ -95,13 +98,16 @@ Set up a basic isolated shell environment using:
 - `sudo` privileges
 - Tools: `debootstrap`, `chroot`, `ldd`
 
----
+
+````
+````
+
 
 ## 🧪 Method 1: Manual chroot (Optional but Good to Know)
 
-> Skip to [Method 2](#-method-2-debootstrap-way-recommended) if you only want debootstrap.
+> Skip to [Method 2](#-method-2-debootstrap-way-recommended-easy) if you only want debootstrap.
 
-**Steps**:
+### 🔨 Steps:
 ```bash
 mkdir -p ~/jail/{bin,lib,lib64}
 sudo cp /bin/bash ~/jail/bin/
@@ -124,9 +130,11 @@ export PATH=/bin
 
 ✅ Now you are in a minimal fake root.
 
----
 
-## 🚀 Method 2: debootstrap Way (Recommended-easy)
+
+
+
+## 🚀 Method 2: debootstrap Way (Recommended–Easy)
 
 ### ✅ Step 1: Install debootstrap
 
@@ -174,54 +182,50 @@ sudo rm -rf ~/mychroot
 **sudo** stands for *“superuser do”*.
 It lets a normal user temporarily run commands as the root user (administrator).
 
-**Why?**
+### 💡 Why?
 
-* Linux security does not allow normal users to:
+Linux does not allow normal users to:
 
-  * Install software
-  * Change protected system files
-  * Create privileged folders like `/fake_root`
+* Install software
+* Change protected system files
+* Create privileged folders like `/fake_root`
 
-**For this chroot task, sudo is needed because**:
+### 💬 For this chroot task, `sudo` is needed because:
 
-* You are creating a new root filesystem (`/fake_root`)
-* Downloading & installing system files
-* Using `chroot` itself (requires root)
+* You are creating a new root filesystem
+* You are downloading and installing system files
+* You are using the `chroot` command itself (requires root)
 
 ---
 
-### 🛡️ Why not just always be root?
+### 🛡️ Why Not Always Be Root?
 
-* Being root all the time is risky:
+* Running everything as root is dangerous:
 
   * One wrong command can break your system
-  * Malware can do more damage
+  * Malware can cause serious damage
 
-**sudo** is safer:
+Using `sudo` ensures:
 
-* Forces you to think before running privileged actions
-* Grants root only to the commands you choose
+* You think before doing risky stuff
+* Only specific commands run with elevated privileges
 
-> In short:
-> **`sudo` is a temporary admin key** — used only when you really need it.
+> **`sudo` is a temporary admin key — used only when absolutely needed.**
 
 ---
-
 
 ## 🎥 Demo Video
 
-[**Click here to see the chroot demo**](https://drive.google.com/file/d/15q35ULMV-M_2eDR8dRb43wWUPnqVZn31/view?usp=sharing)
+📎 [**Click here to see the chroot demo**](https://drive.google.com/file/d/15q35ULMV-M_2eDR8dRb43wWUPnqVZn31/view?usp=sharing)
 
 ---
 
-## 🧠 Why is chroot still relevant?
+## 🧠 Why Is chroot Still Relevant?
 
-* It shows you how *container-like* isolation was done historically
-* Prepares you to understand container runtimes like containerd, runc, and Docker
-* Makes you confident with Linux’s lower-level mechanisms
-
----
+* Shows how container-like isolation worked before Docker
+* Helps understand container runtimes (runc, containerd, Docker)
+* Builds low-level Linux confidence
 
 
-— just say **“let’s push”** and I’ll guide you! 🚀
+Let me know if you'd like a `.gitignore`, folder structure setup, or help with `git init`, `commit`, and `push`.
 ```
