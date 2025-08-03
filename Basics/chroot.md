@@ -221,5 +221,3 @@ Using `sudo` ensures:
 * Builds low-level Linux confidence
 
 
-Let me know if you'd like a `.gitignore`, folder structure setup, or help with `git init`, `commit`, and `push`.
-```
