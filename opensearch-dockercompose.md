@@ -1,0 +1,171 @@
+# 🚀 Deploying an OpenSearch Cluster using Docker Compose
+
+This project demonstrates how to set up an OpenSearch single-node cluster with OpenSearch Dashboards using `docker-compose`. The goal is to simplify the setup for DevOps engineers or beginners who want to explore OpenSearch for log analytics or search use cases.
+
+
+---
+Demo link : https://drive.google.com/file/d/1cdOnH3O5uTfPXyWC6BenELgNK97_9m_t/view?usp=sharing
+---
+
+## 🧠 What is OpenSearch?
+
+OpenSearch is an open-source search and analytics suite derived from Elasticsearch 7.10. It supports full-text search, log aggregation, metrics storage, and more — useful for observability, APM, and search-heavy applications.
+
+---
+
+## ✅ Prerequisites
+
+Before you begin, ensure the following are installed:
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- Internet connectivity to pull images from DockerHub
+
+---
+
+## 📁 Project Structure
+
+```bash
+open-search/
+├── docker-compose.yml
+````
+
+> You **do not** need to pull images manually; Docker Compose handles that.
+
+---
+
+## 📦 Images Used
+
+* `opensearchproject/opensearch:2.14.0`
+* `opensearchproject/opensearch-dashboards:2.14.0`
+
+---
+
+## 🧾 docker-compose.yml Explained
+
+```yaml
+version: "3.8"
+
+services:
+  opensearch-node1:
+    image: opensearchproject/opensearch:2.14.0
+    container_name: opensearch-node1
+    environment:
+      - cluster.name=opensearch-cluster
+      - node.name=opensearch-node1
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - plugins.security.disabled=true
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Lavanyajc@11
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - opensearch-data:/usr/share/opensearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - opensearch-net
+    healthcheck:
+      test: ["CMD", "curl", "-s", "http://localhost:9200"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:2.14.0
+    container_name: opensearch-dashboards
+    environment:
+      - OPENSEARCH_HOSTS=http://opensearch-node1:9200
+      - DISABLE_SECURITY_DASHBOARDS_PLUGIN=true
+    ports:
+      - 5601:5601
+    depends_on:
+      opensearch-node1:
+        condition: service_healthy
+    networks:
+      - opensearch-net
+
+volumes:
+  opensearch-data:
+
+networks:
+  opensearch-net:
+```
+
+### 🔍 Key Points
+
+| Component                                 | Purpose                                     |
+| ----------------------------------------- | ------------------------------------------- |
+| `version: "3.8"`                          | Compose file format version                 |
+| `opensearch-node1`                        | Backend database service                    |
+| `opensearch-dashboards`                   | Frontend UI for interacting with OpenSearch |
+| `OPENSEARCH_INITIAL_ADMIN_PASSWORD`       | Set your custom admin password              |
+| `DISABLE_SECURITY_DASHBOARDS_PLUGIN=true` | Disable login for simplified setup          |
+
+---
+
+## 🛠️ Steps to Run
+
+1. **Navigate to your project folder:**
+
+   ```bash
+   cd open-search/
+   ```
+
+2. **Start the cluster:**
+
+   ```bash
+   docker-compose up -d
+   ```
+
+3. **Access OpenSearch Dashboards:**
+
+   Open [http://localhost:5601](http://localhost:5601) in your browser.
+
+---
+
+## 🔐 Login Credentials
+
+| Username | Password      |
+| -------- | ------------- |
+| admin    | Lavanyajc\@11 |
+
+---
+
+## 🧯 Common Errors & Fixes
+
+| Issue                          | Solution                                                       |
+| ------------------------------ | -------------------------------------------------------------- |
+| `Connection Refused` at `5601` | Ensure OpenSearch is healthy before Dashboards start           |
+| `login failed`                 | Make sure `DISABLE_SECURITY_DASHBOARDS_PLUGIN=true` is present |
+| `curl` healthcheck fails       | Wait a few seconds; OpenSearch takes time to boot              |
+
+---
+
+## 🧪 Useful Commands
+
+```bash
+# Check running containers
+docker ps
+
+# Restart cluster
+docker-compose down
+docker-compose up -d
+
+# View logs
+docker-compose logs -f opensearch-node1
+docker-compose logs -f opensearch-dashboards
+```
+
+---
+
+## 📌 Conclusion
+
+This setup gives you a clean, production-style OpenSearch instance to experiment with logs, dashboards, and metrics. You can extend this later with authentication, certs, and multi-node clusters.
+
+
+Let me know if you want a `README.md` file download or I can commit this into a GitHub repo format for you too.
+```
