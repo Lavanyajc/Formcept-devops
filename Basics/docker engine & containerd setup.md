@@ -1,0 +1,109 @@
+## 📽️ Demo Video
+
+👉 [Watch the live demo here](https://drive.google.com/file/d/1EDRu8xXYlknzQEU5fzAHadhUcJOzu8Df/view?usp=sharing)
+
+---
+
+## 🧰 Tools Installed
+
+| Tool        | Purpose                         |
+|-------------|----------------------------------|
+| containerd  | Container runtime (manages containers) |
+| Docker Engine | Frontend CLI + API for container management |
+| runc        | Low-level runtime that creates containers from OCI spec |
+
+---
+
+## 📌 Why This Setup?
+
+Docker has evolved from a monolithic system to a layered architecture:
+
+- `Docker CLI` sends commands to
+- `Docker Engine`, which uses
+- `containerd` to manage container lifecycles, which calls
+- `runc` to actually start containers using Linux features.
+
+This clean separation allows better debugging, observability, and control.
+
+---
+
+## 🛠️ Step-by-Step Instructions
+
+### 🔹 1. Remove old Docker and runtimes
+```bash
+sudo apt-get remove docker docker-engine docker.io containerd runc
+````
+
+### 🔹 2. Install containerd
+
+```bash
+sudo apt update
+sudo apt install -y containerd
+```
+
+### 🔹 3. Generate containerd config
+
+```bash
+sudo mkdir -p /etc/containerd
+containerd config default | sudo tee /etc/containerd/config.toml
+```
+
+### 🔹 4. (Optional) Set `SystemdCgroup = true` for better process management
+
+```bash
+sudo nano /etc/containerd/config.toml
+# Find and set:
+# [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+# SystemdCgroup = true
+```
+
+### 🔹 5. Restart and enable containerd
+
+```bash
+sudo systemctl restart containerd
+sudo systemctl enable containerd
+```
+
+### 🔹 6. Install Docker Engine
+
+```bash
+sudo apt install -y docker.io
+```
+
+### 🔹 7. Verify Docker is using containerd
+
+```bash
+docker info | grep -i containerd
+```
+
+✅ Example Output:
+
+```
+driver-type: io.containerd.snapshotter.v1
+Runtimes: io.containerd.runc.v2 nvidia runc
+containerd version: 05044ec0a9a75232cad458027ca83437aae3f4da
+```
+
+---
+
+## 🔍 Test the Setup
+
+Run a simple container:
+
+```bash
+docker run -d --name test-nginx -p 8080:80 nginx
+docker ps
+```
+
+Then visit `http://localhost:8080` in your browser — the nginx container is running via Docker → containerd → runc → Linux kernel.
+
+---
+
+## 🧠 Key Takeaways
+
+* Docker Engine is now **decoupled** from containerd.
+* You control `containerd` independently — a requirement in Kubernetes and production clusters.
+* This setup aligns with **OCI runtime standards** used in cloud-native platforms.
+
+---
+
