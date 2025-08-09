@@ -221,9 +221,8 @@ Once the data source was added, explored metrics like:
 
 ---
 
-## 🧠 Key Learnings
+## Key Learnings
 * Plugin integration is vital for exporting OpenSearch metrics.
-* `host.docker.internal` is a crucial trick for container-to-host communication on Windows.
 * Prometheus and Grafana can be containerized for quick observability setup.
 * Real-time monitoring of OpenSearch is now live and visual.
 
