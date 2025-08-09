@@ -89,7 +89,7 @@ spec:
 ### 3. Service Manifest (`opensearch-service.yaml`)
 * Defines a **NodePort** service exposing ports:
   * 9200 on node port 31200
-  * 9600 on node port 31201
+ 
 ```
 apiVersion: v1
 kind: Service
