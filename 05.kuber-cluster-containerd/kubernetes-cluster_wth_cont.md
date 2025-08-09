@@ -138,15 +138,3 @@ Everything should now be `Running` and `Ready`.
 
 ---
 
-### 📦 To Add Worker Nodes
-
-Run this (example output from kubeadm init):
-
-```bash
-
-kubeadm join 172.30.178.85:6443 --token baeaz1.wdu635eprhbzzwez \
-        --discovery-token-ca-cert-hash sha256:5fafea6867d80c4cac1c16fff06ada9c9e58c65000a968d8d6f19eefa0d27d72  
-```
--its my output 
-> You can copy this from the `kubeadm init` output.
-
