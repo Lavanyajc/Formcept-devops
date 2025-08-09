@@ -47,12 +47,69 @@ kubectl create namespace opensearch
     * `discovery.type=single-node` (single node cluster mode)
     * `plugins.security.disabled=true` (disables security plugin for simplified setup)
     * `OPENSEARCH_INITIAL_ADMIN_PASSWORD="Lavanyajc@11"` (admin password)
+ ```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opensearch
+  namespace: opensearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opensearch
+  template:
+    metadata:
+      labels:
+        app: opensearch
+    spec:
+      containers:
+        - name: opensearch
+          image: opensearchproject/opensearch:2.14.0
+          ports:
+            - containerPort: 9200
+            - containerPort: 9600
+          env:
+            - name: discovery.type
+              value: single-node
+            - name: plugins.security.disabled
+              value: "true"
+            - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+              value: "Lavanyajc@11"
+          resources:
+            limits:
+              memory: "2Gi"
+              cpu: "1"
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+  ```
 ---
 
 ### 3. Service Manifest (`opensearch-service.yaml`)
 * Defines a **NodePort** service exposing ports:
   * 9200 on node port 31200
   * 9600 on node port 31201
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: opensearch-nodeport
+  namespace: opensearch
+spec:
+  selector:
+    app: opensearch
+  ports:
+    - name: rest
+      port: 9200
+      targetPort: 9200
+      nodePort: 31200  # pick a port between 30000-32767
+    - name: metrics
+      port: 9600
+      targetPort: 9600
+      nodePort: 31201
+  type: NodePort
+```
 
 * This allows access to OpenSearch from outside the cluster via:
 ```
