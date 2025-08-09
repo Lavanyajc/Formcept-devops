@@ -1,6 +1,8 @@
 ## 🧱 What Are Containers?
+```
 Containers are a way to **run software in isolated environments**.  
 They package your application code along with everything it needs — like libraries and dependencies — so it runs the same everywhere.
+```
 ---
 
 ##DEMO LINK : https://drive.google.com/file/d/10oa7w3ZTdtcle-jTyvoxeadSaxMq41pi/view?usp=sharing
