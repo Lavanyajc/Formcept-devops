@@ -1,11 +1,11 @@
 ## 🧱 What Are Containers?
-
 Containers are a way to **run software in isolated environments**.  
 They package your application code along with everything it needs — like libraries and dependencies — so it runs the same everywhere.
-
 ---
+
 ##DEMO LINK : https://drive.google.com/file/d/10oa7w3ZTdtcle-jTyvoxeadSaxMq41pi/view?usp=sharing
 
+---
 ## 🔹 1. Docker CLI / Docker API
 
 **What is it?**  
@@ -54,8 +54,6 @@ It handles:
 
 ### 🔸 Examples of Container Runtimes:
 
-Absolutely! Here are two **separate Markdown “boxed” sections** you can paste in GitHub (using blockquotes and code blocks to visually separate):
-
 ---
 
 > ### Container Runtimes (Low-Level)
@@ -89,7 +87,6 @@ Absolutely! Here are two **separate Markdown “boxed” sections** you can past
 
 
 ## 🧩 4. How Do They Work Together?
-
 ### Visual Flow:
 
 ```
