@@ -38,7 +38,6 @@ A **container engine** is a full-featured tool that helps developers build, run,
 | ----------- | ------------------------------ |
 | **Docker**  | Most popular container engine  |
 | **Podman**  | Lightweight, Docker-compatible |
-| **Buildah** | Focused on image building only |
 
 ---
 
@@ -55,14 +54,39 @@ It handles:
 
 ### 🔸 Examples of Container Runtimes:
 
-| Name           | Description                            |
-| -------------- | -------------------------------------- |
-| **containerd** | Used by Docker and Kubernetes          |
-| **CRI-O**      | Used in Kubernetes (OpenShift)         |
-| **runc**       | Launches container process (low-level) |
-| **crun**       | Lightweight alternative to runc        |
+Absolutely! Here are two **separate Markdown “boxed” sections** you can paste in GitHub (using blockquotes and code blocks to visually separate):
 
 ---
+
+> ### Container Runtimes (Low-Level)
+>
+> ```
+> runc
+> - Launches container process based on OCI specs.
+> - Manages container lifecycle at the lowest level (create/start/stop).
+>
+> crun
+> - Lightweight, faster alternative to runc written in C.
+> - Runs containers with lower resource usage.
+> ```
+
+---
+
+> ### Container Runtime Interfaces / Daemons (Higher-Level)
+>
+> ```
+> containerd
+> - High-level container runtime daemon used by Docker and Kubernetes.
+> - Manages image transfer, storage, and container lifecycle, using runtimes like runc/crun internally.
+>
+> CRI-O
+> - Kubernetes-focused container runtime implementing CRI.
+> - Lightweight and uses runc/crun under the hood.
+> - Common in OpenShift and Kubernetes.
+> ```
+
+---
+
 
 ## 🧩 4. How Do They Work Together?
 
