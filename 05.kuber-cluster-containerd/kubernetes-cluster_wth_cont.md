@@ -127,7 +127,7 @@ kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.0/
 
 ---
 
-### 🚀 Final Check
+###  Final Check
 
 ```bash
 kubectl get nodes
