@@ -57,7 +57,6 @@ services:
       - opensearch-data:/usr/share/opensearch/data
     ports:
       - 9200:9200
-      - 9600:9600
     networks:
       - opensearch-net
     healthcheck:
@@ -146,7 +145,7 @@ USER opensearch
 RUN /usr/share/opensearch/bin/opensearch-plugin install --batch file:///tmp/prometheus-exporter.zip
 
 # Expose OpenSearch and Prometheus exporter ports
-EXPOSE 9200 9600
+EXPOSE 9200 
 
 ```
 ---
@@ -155,9 +154,8 @@ EXPOSE 9200 9600
 ```
 network.host: 0.0.0.0
 discovery.type: single-node
-
 plugins.prometheus.host: 0.0.0.0
-plugins.prometheus.port: 9600
+
 ```
 ---
 
