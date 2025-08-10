@@ -125,8 +125,7 @@ scrape_configs:
     static_configs:
       - targets: ['opensearch-node1:9200']
 
-* `9600` is the default port where the OpenSearch Prometheus Exporter exposes metrics.
-* Used `host.docker.internal` to resolve the host IP inside Docker on Windows.
+
 
 ---
 ```
