@@ -1,240 +1,188 @@
 {
-  "uid": "opensearch-cluster-overview-01",
-  "title": "OpenSearch Cluster Overview",
-  "version": 1,
-  "schemaVersion": 38,
-  "style": "dark",
-  "tags": ["opensearch", "prometheus", "cluster"],
-  "time": {
-    "from": "now-1h",
-    "to": "now"
+  "id": 1,
+  "type": "timeseries",
+  "title": "New panel",
+  "gridPos": {
+    "x": 0,
+    "y": 0,
+    "h": 8,
+    "w": 12
   },
-  "timezone": "",
-  "editable": true,
-  "templating": {
-    "list": [
-      {
-        "name": "breaker_name",
-        "type": "query",
-        "label": "Circuit Breaker Name",
-        "datasource": "Prometheus",
-        "refresh": 1,
-        "query": "label_values(opensearch_circuitbreaker_estimated_bytes, name)",
-        "includeAll": true,
-        "multi": false,
-        "sort": 1,
-        "definition": "",
-        "regex": "",
-        "allValue": "",
-        "current": {
-          "text": "request",
-          "value": "request"
+  "fieldConfig": {
+    "defaults": {
+      "custom": {
+        "drawStyle": "line",
+        "lineInterpolation": "linear",
+        "barAlignment": 0,
+        "barWidthFactor": 0.6,
+        "lineWidth": 1,
+        "fillOpacity": 0,
+        "gradientMode": "none",
+        "spanNulls": false,
+        "insertNulls": false,
+        "showPoints": "auto",
+        "pointSize": 5,
+        "stacking": {
+          "mode": "none",
+          "group": "A"
+        },
+        "axisPlacement": "auto",
+        "axisLabel": "",
+        "axisColorMode": "text",
+        "axisBorderShow": false,
+        "scaleDistribution": {
+          "type": "linear"
+        },
+        "axisCenteredZero": false,
+        "hideFrom": {
+          "tooltip": false,
+          "viz": false,
+          "legend": false
+        },
+        "thresholdsStyle": {
+          "mode": "off"
         }
-      }
-    ]
-  },
-  "panels": [
-    {
-      "id": 1,
-      "title": "Cluster Timed Out",
-      "type": "stat",
-      "datasource": "Prometheus",
-      "gridPos": {"h": 4, "w": 4, "x": 0, "y": 0},
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "min": 0,
-          "max": 1,
-          "color": {
-            "mode": "thresholds"
+      },
+      "color": {
+        "mode": "palette-classic"
+      },
+      "mappings": [],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "value": null,
+            "color": "green"
+          },
+          {
+            "value": 80,
+            "color": "red"
           }
-        }
+        ]
+      }
+    },
+    "overrides": []
+  },
+  "pluginVersion": "12.2.0-16791878397",
+  "targets": [
+    {
+      "refId": "A",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "aeunxi3ystwxsc"
       },
-      "options": {
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "values": false,
-          "fields": ""
-        },
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "textMode": "value",
-        "thresholds": {
-          "mode": "absolute",
-          "steps": [
-            {"color": "green", "value": 0},
-            {"color": "red", "value": 1}
-          ]
-        }
-      },
-      "targets": [
-        {
-          "expr": "opensearch_cluster_is_timedout_bool",
-          "refId": "A"
-        }
-      ]
+      "editorMode": "builder",
+      "expr": "opensearch_circuitbreaker_estimated_bytes",
+      "legendFormat": "__auto",
+      "range": true
     },
     {
-      "id": 2,
-      "title": "Data Nodes Count",
-      "type": "stat",
-      "datasource": "Prometheus",
-      "gridPos": {"h": 4, "w": 4, "x": 4, "y": 0},
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "min": 0
-        }
+      "refId": "B",
+      "expr": "opensearch_circuitbreaker_limit_bytes",
+      "range": true,
+      "instant": false,
+      "datasource": {
+        "uid": "aeunxi3ystwxsc",
+        "type": "prometheus"
       },
-      "options": {
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "values": false,
-          "fields": ""
-        },
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "textMode": "value"
-      },
-      "targets": [
-        {
-          "expr": "opensearch_cluster_datanodes_number",
-          "refId": "A"
-        }
-      ]
+      "hide": false,
+      "editorMode": "builder",
+      "legendFormat": "__auto"
     },
     {
-      "id": 3,
-      "title": "Pending Tasks",
-      "type": "stat",
-      "datasource": "Prometheus",
-      "gridPos": {"h": 4, "w": 4, "x": 8, "y": 0},
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "min": 0
-        }
+      "refId": "C",
+      "expr": "opensearch_circuitbreaker_overhead_ratio",
+      "range": true,
+      "instant": false,
+      "datasource": {
+        "uid": "aeunxi3ystwxsc",
+        "type": "prometheus"
       },
-      "options": {
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "values": false,
-          "fields": ""
-        },
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "textMode": "value"
-      },
-      "targets": [
-        {
-          "expr": "opensearch_cluster_pending_tasks_number",
-          "refId": "A"
-        }
-      ]
+      "hide": false,
+      "editorMode": "builder",
+      "legendFormat": "__auto"
     },
     {
-      "id": 4,
-      "title": "In-flight Fetch Number",
-      "type": "timeseries",
-      "datasource": "Prometheus",
-      "gridPos": {"h": 6, "w": 12, "x": 0, "y": 4},
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "min": 0
-        }
+      "refId": "D",
+      "expr": "opensearch_cluster_routing_allocation_disk_threshold_enabled",
+      "range": true,
+      "instant": false,
+      "datasource": {
+        "uid": "aeunxi3ystwxsc",
+        "type": "prometheus"
       },
-      "options": {
-        "legend": {"displayMode": "list", "placement": "bottom"}
-      },
-      "targets": [
-        {
-          "expr": "opensearch_cluster_inflight_fetch_number",
-          "refId": "A"
-        }
-      ]
+      "hide": false,
+      "editorMode": "builder",
+      "legendFormat": "__auto"
     },
     {
-      "id": 5,
-      "title": "Circuit Breaker Overhead Ratio",
-      "type": "timeseries",
-      "datasource": "Prometheus",
-      "gridPos": {"h": 6, "w": 6, "x": 0, "y": 10},
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "min": 0
-        }
+      "refId": "E",
+      "expr": "opensearch_circuitbreaker_tripped_count",
+      "range": true,
+      "instant": false,
+      "datasource": {
+        "uid": "aeunxi3ystwxsc",
+        "type": "prometheus"
       },
-      "options": {
-        "legend": {"displayMode": "list", "placement": "bottom"}
-      },
-      "targets": [
-        {
-          "expr": "opensearch_circuitbreaker_overhead_ratio{name=\"$breaker_name\"}",
-          "refId": "A"
-        }
-      ]
+      "hide": false,
+      "editorMode": "builder",
+      "legendFormat": "__auto"
     },
     {
-      "id": 6,
-      "title": "Circuit Breaker Trips Count",
-      "type": "stat",
-      "datasource": "Prometheus",
-      "gridPos": {"h": 4, "w": 6, "x": 6, "y": 10},
-      "fieldConfig": {
-        "defaults": {
-          "unit": "none",
-          "min": 0
-        }
+      "refId": "F",
+      "expr": "opensearch_cluster_datanodes_number",
+      "range": true,
+      "instant": false,
+      "datasource": {
+        "uid": "aeunxi3ystwxsc",
+        "type": "prometheus"
       },
-      "options": {
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "values": false,
-          "fields": ""
-        },
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "textMode": "value"
-      },
-      "targets": [
-        {
-          "expr": "opensearch_circuitbreaker_tripped_count{name=\"$breaker_name\"}",
-          "refId": "A"
-        }
-      ]
+      "hide": false,
+      "editorMode": "builder",
+      "legendFormat": "__auto"
     },
     {
-      "id": 7,
-      "title": "Circuit Breaker Estimated Bytes",
-      "type": "timeseries",
-      "datasource": "Prometheus",
-      "gridPos": {"h": 6, "w": 6, "x": 12, "y": 10},
-      "fieldConfig": {
-        "defaults": {
-          "unit": "bytes",
-          "min": 0
-        }
+      "refId": "G",
+      "expr": "opensearch_cluster_shards_number",
+      "range": true,
+      "instant": false,
+      "datasource": {
+        "uid": "aeunxi3ystwxsc",
+        "type": "prometheus"
       },
-      "options": {
-        "legend": {"displayMode": "list", "placement": "bottom"}
+      "hide": false,
+      "editorMode": "builder",
+      "legendFormat": "__auto"
+    },
+    {
+      "refId": "H",
+      "expr": "opensearch_fs_io_total_write_operations",
+      "range": true,
+      "instant": false,
+      "datasource": {
+        "uid": "aeunxi3ystwxsc",
+        "type": "prometheus"
       },
-      "targets": [
-        {
-          "expr": "opensearch_circuitbreaker_estimated_bytes{name=\"$breaker_name\"}",
-          "refId": "A"
-        }
-      ]
+      "hide": false,
+      "editorMode": "builder",
+      "legendFormat": "__auto"
     }
   ],
-  "timepicker": {}
+  "datasource": {
+    "uid": "aeunxi3ystwxsc",
+    "type": "prometheus"
+  },
+  "options": {
+    "tooltip": {
+      "mode": "single",
+      "sort": "none",
+      "hideZeros": false
+    },
+    "legend": {
+      "showLegend": true,
+      "displayMode": "list",
+      "placement": "bottom",
+      "calcs": []
+    }
+  }
 }
