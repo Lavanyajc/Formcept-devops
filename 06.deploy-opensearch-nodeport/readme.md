@@ -161,6 +161,8 @@ Ensure the service type is `NodePort` and ports 31200 (for REST) and 31201 (for 
 ```bash
 curl -u admin:Lavanyajc@11 http://<node-ip>:31200
 ```
+browser-http://admin:Lavanyajc@11@<node-ip>:31200
+
 
 You should get a JSON response with OpenSearch cluster details.
 
