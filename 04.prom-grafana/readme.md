@@ -144,7 +144,6 @@ USER opensearch
 # Install the plugin
 RUN /usr/share/opensearch/bin/opensearch-plugin install --batch file:///tmp/prometheus-exporter.zip
 
-# Expose OpenSearch 
 EXPOSE 9200 
 
 ```
