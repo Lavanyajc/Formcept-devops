@@ -122,7 +122,7 @@ scrape_configs:
   - job_name: 'opensearch'
     metrics_path: /_prometheus/metrics
     static_configs:
-      - targets: ['opensearch-node1:9600']
+      - targets: ['opensearch-node1:9200']
 
 
 
