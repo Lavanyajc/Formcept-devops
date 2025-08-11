@@ -122,7 +122,7 @@ scrape_configs:
   - job_name: 'opensearch'
     metrics_path: /_prometheus/metrics
     static_configs:
-      - targets: ['opensearch-node1:9200']
+      - targets: ['opensearch-node1:9600']
 
 
 
@@ -144,7 +144,7 @@ USER opensearch
 # Install the plugin
 RUN /usr/share/opensearch/bin/opensearch-plugin install --batch file:///tmp/prometheus-exporter.zip
 
-EXPOSE 9200 
+EXPOSE 9200  9600
 
 ```
 ---
